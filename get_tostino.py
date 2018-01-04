@@ -85,7 +85,10 @@ class Application(Frame):
 
     #OUTPUTS PIZZA ROLLS ON GUI
     def output_pizza_roll(self):
-        self.pizzarolls = self.converter(self.text_entry.get(), self.currency.get())
+        if self.text_entry.get() == '':
+            self.pizzarolls = 0
+        else:
+            self.pizzarolls = self.converter(int(self.text_entry.get()), self.currency.get())
         self.final_text = "You can buy " + str(self.pizzarolls) + " pizza rolls with your money."
         self.results_txt.delete(0.0, END)
         self.results_txt.insert(0.0, final_text)
