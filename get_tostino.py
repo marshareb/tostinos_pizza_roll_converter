@@ -7,8 +7,9 @@ class Application(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
         self.grid()
-        self.create_widgets()
+        self.create_widgets
 
+    @property
     def create_widgets(self):
         # LABEL AND ENTRY FIELD
         self.text_label = Label(self, text = "Enter amount:")
@@ -16,7 +17,7 @@ class Application(Frame):
         self.text_entry = Entry(self, width = 20)
         self.text_entry.grid(row = 1, column = 0, columnspan = 3)
 
-        # CURRENCY CHOICES
+        # CURRENCY LABELS AND BUTTONS
         self.currency = StringVar()
         self.currency.set(None)
         self.currency_label = Label(self, text = "Choose your currency:")
@@ -34,7 +35,15 @@ class Application(Frame):
         self.yen_button = Radiobutton(self, text = "Yen", variable = self.currency, value = "JPY")
         self.yen_button.grid(row = 4, column = 2)
 
-    def get_pizza_roll():
+        # FUNCTION BUTTON
+        self.pizza_roll_button = Button(self, text = "TOTINOS!", function = self.output_pizza_roll())
+        self.pizza_roll_button.grid(row = 5, column = 0, columnspan = 3)
+
+        # OUTPUT BOX
+        self.results_txt = Text(self, width = 25, height = 3, wrap = WORD)
+        self.results_txt.grid(row = 6, column = 0, columnspan = 3)
+
+    def get_pizza_roll(self):
         f = urllib.request.urlopen("https://www.amazon.com/Totinos-Pepperoni-Pizza-Rolls-Ounce/dp/B00PJ8MPD8/"
                                    "ref=sr_1_2_a_it?ie=UTF8&qid=1515024359&sr=8-2&keywords=totino%27s%20pizza%20rolls")
         x=str(f.read()).split("<")
@@ -47,7 +56,7 @@ class Application(Frame):
         return(round(float(j[-5:])/450, 2))
 
 
-    def convert_currency(currency1, currency2):
+    def convert_currency(self, currency1, currency2):
         try:
             from currency_converter import CurrencyConverter
         except:
@@ -69,8 +78,11 @@ class Application(Frame):
                 return round(float(x * y),2)
         return(round(CurrencyConverter().convert(1, currency1, currency2),2))
 
-    def converter(amount, currency):
+    def converter(self, amount, currency):
         return(round(convert_currency(currency, 'TOT') * amount))
+
+    def output_pizza_roll(self):
+        pass
 
 # main
 root = Tk()
