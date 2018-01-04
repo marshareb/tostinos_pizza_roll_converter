@@ -19,7 +19,7 @@ class Application(Frame):
 
         # CURRENCY LABELS AND BUTTONS
         self.currency = StringVar()
-        self.currency.set(None)
+        self.currency.set('USD')
         self.currency_label = Label(self, text = "Choose your currency:")
         self.currency_label.grid(row = 2, column = 0, columnspan = 6)
         self.dollar_button = Radiobutton(self, text = "US Dollar", variable = self.currency, value = 'USD')
@@ -43,6 +43,7 @@ class Application(Frame):
         self.results_txt = Text(self, width = 25, height = 3, wrap = WORD)
         self.results_txt.grid(row = 6, column = 0, columnspan = 3)
 
+    # FINDS PRICE PER PIZZA ROLL ACCORDING TO AMAZON.COM
     def get_pizza_roll(self):
         f = urllib.request.urlopen("https://www.amazon.com/Totinos-Pepperoni-Pizza-Rolls-Ounce/dp/B00PJ8MPD8/"
                                    "ref=sr_1_2_a_it?ie=UTF8&qid=1515024359&sr=8-2&keywords=totino%27s%20pizza%20rolls")
@@ -55,7 +56,7 @@ class Application(Frame):
         # 6 * 90 = 450 pizza rolls
         return(round(float(j[-5:])/450, 2))
 
-
+    # CONVERTS SELECTED CURRENCY TO ANOTHER
     def convert_currency(self, currency1, currency2):
         try:
             from currency_converter import CurrencyConverter
@@ -64,25 +65,31 @@ class Application(Frame):
             from currency_converter import CurrencyConverter
         if currency1 == 'TOT':
             if currency2 == 'USD':
-                return round((get_pizza_roll()),2)
+                return round((self.get_pizza_roll()),2)
             else:
-                x = (get_pizza_roll())
+                x = (self.get_pizza_roll())
                 y = float(CurrencyConverter().convert(1, 'USD', currency2))
                 return round(float(x * y),2)
         if currency2 == 'TOT':
             if currency1 == 'USD':
-                return 1/(get_pizza_roll())
+                return 1/(self.get_pizza_roll())
             else:
-                x = 1/(get_pizza_roll())
+                x = 1/(self.get_pizza_roll())
                 y = float(CurrencyConverter().convert(1, currency1, 'USD'))
                 return round(float(x * y),2)
         return(round(CurrencyConverter().convert(1, currency1, currency2),2))
 
+    # OUTPUTS WHOLE NUMBER OF PIZZA ROLLS GIVEN AMOUNT OF CURRENCY
     def converter(self, amount, currency):
-        return(round(convert_currency(currency, 'TOT') * amount))
+        return(round(self.convert_currency(currency, 'TOT') * amount))
 
+    #OUTPUTS PIZZA ROLLS ON GUI
     def output_pizza_roll(self):
-        pass
+        self.pizzarolls = self.converter(self.text_entry.get(), self.currency.get())
+        self.final_text = "You can buy " + str(self.pizzarolls) + " pizza rolls with your money."
+        self.results_txt.delete(0.0, END)
+        self.results_txt.insert(0.0, final_text)
+        # print(self.price_per_roll)
 
 # main
 root = Tk()
