@@ -11,16 +11,16 @@ class Application(Frame):
 
     def create_widgets(self):
         # LABEL AND ENTRY FIELD
-        self.text_label = Label(self, text = "Enter the amount of money you have:")
-        self.text_label.grid(row = 0, column = 0)
-        self.text_entry = Entry(self, width = 40)
-        self.text_entry.grid(row = 1, column = 0)
+        self.text_label = Label(self, text = "Enter amount:")
+        self.text_label.grid(row = 0, column = 0, columnspan = 3)
+        self.text_entry = Entry(self, width = 20)
+        self.text_entry.grid(row = 1, column = 0, columnspan = 3)
 
         # CURRENCY CHOICES
         self.currency = StringVar()
         self.currency.set(None)
         self.currency_label = Label(self, text = "Choose your currency:")
-        self.currency_label.grid(row = 2, column = 0)
+        self.currency_label.grid(row = 2, column = 0, columnspan = 6)
         self.dollar_button = Radiobutton(self, text = "US Dollar", variable = self.currency, value = 'USD')
         self.dollar_button.grid(row = 3, column = 0)
         self.peso_button = Radiobutton(self, text = "Peso", variable = self.currency, value = "MXN")
@@ -28,11 +28,11 @@ class Application(Frame):
         self.rupee_button = Radiobutton(self, text = "Rupee", variable = self.currency, value = "INR")
         self.rupee_button.grid(row = 3, column = 2)
         self.euro_button = Radiobutton(self, text = "Euro", variable = self.currency, value = "EUR")
-        self.euro_button.grid(row = 3, column = 3)
+        self.euro_button.grid(row = 4, column = 0)
         self.pound_button = Radiobutton(self, text = "Pound", variable = self.currency, value = "GBP")
-        self.pound_button.grid(row = 3, column = 4)
+        self.pound_button.grid(row = 4, column = 1)
         self.yen_button = Radiobutton(self, text = "Yen", variable = self.currency, value = "JPY")
-        self.yen_button.grid(row = 3, column = 5)
+        self.yen_button.grid(row = 4, column = 2)
 
     def get_pizza_roll():
         f = urllib.request.urlopen("https://www.amazon.com/Totinos-Pepperoni-Pizza-Rolls-Ounce/dp/B00PJ8MPD8/"
@@ -75,10 +75,7 @@ class Application(Frame):
 # main
 root = Tk()
 root.title("Caesar Cypher")
-if 'enchant' in sys.modules:
-    root.geometry("250x200")
-else:
-    root.geometry("250x1200")
+root.geometry("200x300")
 root.resizable(width = FALSE, height = FALSE)
 app = Application(root)
 root.mainloop()
