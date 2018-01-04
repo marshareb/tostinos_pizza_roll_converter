@@ -1,1 +1,3 @@
-# tostinos_pizza_roll_converter
+# Totinos Pizza Roll Converter
+
+Converts money to pizza rolls.
